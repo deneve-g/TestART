@@ -23,7 +23,7 @@ These results demonstrate TestART's superior ability to produce high-quality uni
 
 ## Approach
 
-![TestART](./imgs/TestART.jpg)
+![TestART](./assets/img/TestART.jpg)
 
 The workflow of TestART is illustrated as shown above. Given a source code, TestART initially performs pre-processing to alleviate the hallucination problem. Afterward, TestART leverages the ChatGPT-3.5 model to generate the initial set of test cases T<sub>candidate</sub>. 
 
