@@ -85,15 +85,15 @@ We evaluate TestART across four key perspectives with the following metrics:
 
 ![](./assets/img/correctness%20performance.png)
 
-The correctness performance of TestART compared with different baselines on Defects4J
+The correctness performance of TestART compared with different baselines on Defects4J. (Answer to RQ1)
 
 ![](./assets/img/RQ2.png)
 
-Coverage rate of correct test and test case count for TestART and EvoSuite on Defects4J dataset.
+Coverage rate of correct test and test case count for TestART and EvoSuite on Defects4J dataset. (Answer to RQ2)
 
 ![](./assets/img/experimental%20results.png)
 
-The experimental results of TestART and two baseline methods on HITS dataset.
+The experimental results of TestART and two baseline methods on HITS dataset. (Answer to RQ4)
 
 ## Data Availability
 
