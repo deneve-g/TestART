@@ -46,3 +46,37 @@ TestART leverages the co-evolution mechanism between automated test generation a
 **RQ3:** How does the combination of different parts impact the robustness of TestART?
 
 **RQ4:** What is the performance of TestART when applied to unlearned datasets, and how well does it generalize to new data?
+
+## Experiment Setup
+
+In our experiments, TestART generates unit tests for each focal method through up to four iterations. The system selects the best test case by prioritizing execution success, maximum coverage, and minimal test count. 
+
+For fair comparison with baselines:
+- TestART and ChatUniTest use GPT-3.5-turbo-0125 as the base model (16k context length, `temperature` = 0.5)
+- ChatUniTest's `maxPromptTokens` is set to 16,385 with default `maxRounds` of five iterations per attempt
+- ChatGPT-3.5 and ChatGPT-4.0 baseline tests are obtained using TestART's initial generation
+- A3Test is trained on the Methods2Test dataset with learning rate 1e-5 for 110 epochs
+- EvoSuite is configured with:
+  - 3 CPU cores
+  - 2000MB memory per core
+  - Maximum search time of 10 minutes
+
+The testing environment uses:
+- Java 1.8 as compiler and runtime
+- JUnit 4 as testing framework
+- OpenClover for coverage calculation
+- PITest for mutation coverage (with 11 default mutators)
+
+All experiments are repeated three times with averaged results.
+
+## Conclusion
+
+In this work, we introduce TestART, the first approach to integrate the traditional automated repair technique with the generative capabilities of LLMs through an innovative co-evolutionary framework for generating high-quality unit test cases.
+
+TestART also introduces positive prompt injection and coverage-guided testing feedback to mitigate the effects of faithfulness hallucinations in LLMs and enhance the sufficiency of test cases.
+
+TestART significantly outperforms existing methods, showing an 18% increase in passing rate and a 20% enhancement in coverage rate on tested methods, marking substantial improvements over the capabilities of previous works.
+
+Although TestART is experimented on the ChatGPT-3.5 model, it is superior to the ChatGPT-4.0 model and can be implemented in other LLMs.
+
+TestART shows excellent performance on both open-source datasets and industrial datasets. This indicates that TestART effectively leverages LLMs’ strengths while mitigating their weaknesses, leading to more effective, reliable, and higher-quality unit tests.
