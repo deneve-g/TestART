@@ -37,7 +37,9 @@ Next, TestART employs JUnit and OpenClover to evaluate the coverage of T<sub>suc
 
 TestART leverages the co-evolution mechanism between automated test generation and repair. Benefiting from this synergy, TestART can iterate test cases incrementally and ensure that each round of test cases passes successfully, which continuously improves coverage.
 
-## Research Questions
+## Experiment Design
+
+### Research Questions
 
 **RQ1:** How does the correctness of the test case of TestART compare to the baseline? What are the error types in the test cases and how well does TestART repair different error types?
 
@@ -47,13 +49,55 @@ TestART leverages the co-evolution mechanism between automated test generation a
 
 **RQ4:** What is the performance of TestART when applied to unlearned datasets, and how well does it generalize to new data?
 
-## Experiment Setup
+### Datasets
+
+To verify our method, we select three types of datasets:
+
+1. **Defects4J**: A widely-used open-source dataset containing reproducible software bugs
+2. **HITS dataset**: An unlearned dataset created after GPT-3.5's training cutoff date
+3. **Internal dataset**: A proprietary dataset from a major tech company
+
+For all datasets, we extract public, non-abstract classes as focal classes and their public methods as focal methods. The specific dataset configurations are shown in Table 1.
+
+### Baselines
+
+To evaluate the effectiveness of our proposal, we compare TestART with four baselines:
+
+1. **EvoSuite**: A traditional Search-Based Software Testing (SBST) tool using evolutionary algorithms
+2. **A3Test**: A deep learning-based test generation approach enhanced with assertion knowledge
+3. **ChatGPT**: Two versions (ChatGPT-3.5 and ChatGPT-4.0) are used as baselines
+4. **ChatUniTest**: A ChatGPT-based test generation tool using Generation-Validation-Repair framework
+
+### Evaluation Metrics
+
+We evaluate TestART across four key perspectives with the following metrics:
+
+**Correctness**
+- Syntax Error (SE): Percentage of test code with Java syntax errors
+- Compile Error (CE): Percentage of test code with compilation errors  
+- Runtime Error (RE): Percentage of test code with runtime errors/failures
+- Pass Rate (Pass): Percentage of test code that compiles and runs successfully
+
+**Sufficiency** 
+- Branch Coverage of Correct Tests (BCCT): Branch coverage for passed focal methods
+- Line Coverage of Correct Tests (LCCT): Line coverage for passed focal methods
+- Total Branch Coverage (TBC): Overall branch coverage across all focal methods
+- Total Line Coverage (TLC): Overall line coverage across all focal methods
+
+**Error Detection**
+- Mutation Coverage (MC): Ratio of killed mutations to total mutations
+- Test Strength (TS): Ratio of killed mutations to covered mutations
+
+**Test Case Count**
+- Test Case Count (TCC): Total number of generated test cases
+
+### Experiment Setup
 
 In our experiments, TestART generates unit tests for each focal method through up to four iterations. The system selects the best test case by prioritizing execution success, maximum coverage, and minimal test count. 
 
 For fair comparison with baselines:
-- TestART and ChatUniTest use GPT-3.5-turbo-0125 as the base model (16k context length, `temperature` = 0.5)
-- ChatUniTest's `maxPromptTokens` is set to 16,385 with default `maxRounds` of five iterations per attempt
+- TestART and ChatUniTest use GPT-3.5-turbo-0125 as the base model (16k context length, temperature = 0.5)
+- ChatUniTest's maxPromptTokens is set to 16,385 with default maxRounds of five iterations per attempt
 - ChatGPT-3.5 and ChatGPT-4.0 baseline tests are obtained using TestART's initial generation
 - A3Test is trained on the Methods2Test dataset with learning rate 1e-5 for 110 epochs
 - EvoSuite is configured with:
